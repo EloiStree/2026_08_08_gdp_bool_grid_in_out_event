@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://csrj6koypsflx"]
+
+[ext_resource type="Script" uid="uid://db5es4l3vbm8n" path="res://addons/2026_08_08_gdp_bool_grid_in_out_event/scene/guid/demo_2d_grid_to_action/bool_grid_ui_text_code_changed.gd" id="1_0q5jq"]
+[ext_resource type="Script" uid="uid://de8k8c0ugefb7" path="res://addons/2026_08_08_gdp_bool_grid_in_out_event/scene/guid/demo_2d_grid_to_action/bool_grid_node_holding_state_resource.gd" id="1_7m400"]
+[ext_resource type="Script" uid="uid://dn5wr1guh52vo" path="res://addons/2026_08_08_gdp_bool_grid_in_out_event/scene/guid/demo_2d_grid_to_action/bool_grid_state_resource.gd" id="2_0q5jq"]
+[ext_resource type="Script" uid="uid://lrdb5ry3hjtx" path="res://addons/2026_08_08_gdp_bool_grid_in_out_event/scene/guid/demo_2d_grid_to_action/bool_grid_node_single_condition_to_action.gd" id="2_xg8ei"]
+
+[sub_resource type="Resource" id="Resource_th63h"]
+script = ExtResource("2_0q5jq")
+
+[node name="Demo2dGridToAction" type="Node3D" unique_id=1949051468]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1067470888]
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=960501253]
+offset_right = 531.0
+offset_bottom = 460.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=1448256004]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label Grid Current State" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1945497091]
+layout_mode = 2
+text = "Grid State"
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer/Panel/VBoxContainer" unique_id=950709336]
+layout_mode = 2
+size_flags_vertical = 3
+text = "10000
+00000"
+
+[node name="Label Change Grid with Text" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1966439048]
+layout_mode = 2
+text = "Change following"
+
+[node name="TextEdit2" type="TextEdit" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1809508727]
+layout_mode = 2
+size_flags_vertical = 3
+text = "10000
+00000"
+
+[node name="BoolGridUiTextCodeChanged" type="Node" parent="CanvasLayer/Panel/VBoxContainer/TextEdit2" unique_id=462372097 node_paths=PackedStringArray("_text_edit")]
+script = ExtResource("1_0q5jq")
+_text_edit = NodePath("..")
+metadata/_custom_type_script = "uid://db5es4l3vbm8n"
+
+[node name="Set Up Condition With Text" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=801064406]
+layout_mode = 2
+text = "Condition"
+
+[node name="TextEdit3" type="TextEdit" parent="CanvasLayer/Panel/VBoxContainer" unique_id=41569963]
+layout_mode = 2
+size_flags_vertical = 3
+text = "10000
+00000"
+
+[node name="BoolGridUiTextCodeChanged" type="Node" parent="CanvasLayer/Panel/VBoxContainer/TextEdit3" unique_id=1159872481 node_paths=PackedStringArray("_text_edit")]
+script = ExtResource("1_0q5jq")
+_text_edit = NodePath("..")
+metadata/_custom_type_script = "uid://db5es4l3vbm8n"
+
+[node name="BoolGridNodeSingleConditionToAction" type="Node" parent="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged" unique_id=190877861]
+script = ExtResource("2_xg8ei")
+_emit_text_when_condition_enter = Array[String](["In HelloWorld"])
+_emit_text_when_condition_exit = Array[String](["Out HelloWorld"])
+metadata/_custom_type_script = "uid://lrdb5ry3hjtx"
+
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1240616083]
+layout_mode = 2
+text = "Condition Valide"
+
+[node name="Label Condition Changed Text" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1024450922]
+layout_mode = 2
+text = "Condition Changed"
+
+[node name="EmittedText" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1081206237]
+layout_mode = 2
+
+[node name="BoolGridNodeHoldingStateResource" type="Node" parent="CanvasLayer/Panel" unique_id=501862989]
+script = ExtResource("1_7m400")
+_grid_state_resource = SubResource("Resource_th63h")
+
+[connection signal="on_text_changed" from="CanvasLayer/Panel/VBoxContainer/TextEdit2/BoolGridUiTextCodeChanged" to="CanvasLayer/Panel/BoolGridNodeHoldingStateResource" method="set_with_text_image"]
+[connection signal="on_text_changed" from="CanvasLayer/Panel/VBoxContainer/TextEdit2/BoolGridUiTextCodeChanged" to="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged/BoolGridNodeSingleConditionToAction" method="set_grid_as_text_image"]
+[connection signal="on_text_changed" from="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged" to="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged/BoolGridNodeSingleConditionToAction" method="set_condition_as_text_image"]
+[connection signal="on_condition_enter_emitted_text" from="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged/BoolGridNodeSingleConditionToAction" to="CanvasLayer/Panel/VBoxContainer/EmittedText" method="set_text"]
+[connection signal="on_condition_exit_emitted_text" from="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged/BoolGridNodeSingleConditionToAction" to="CanvasLayer/Panel/VBoxContainer/EmittedText" method="set_text"]
+[connection signal="on_condition_state_updated" from="CanvasLayer/Panel/VBoxContainer/TextEdit3/BoolGridUiTextCodeChanged/BoolGridNodeSingleConditionToAction" to="CanvasLayer/Panel/VBoxContainer/CheckButton" method="set_pressed"]
+[connection signal="on_grid_refresh_debug_as_text_image" from="CanvasLayer/Panel/BoolGridNodeHoldingStateResource" to="CanvasLayer/Panel/VBoxContainer/TextEdit" method="set_text"]

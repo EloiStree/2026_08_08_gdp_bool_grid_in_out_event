@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://i3fjxjons7b7"]
+
+[ext_resource type="Script" uid="uid://dvduakbsnwxjt" path="res://addons/2026_08_08_gdp_bool_grid_in_out_event/scene/guid/demo_grid_key_value_register/script/bool_grid_name_text_edit_to_key_value.gd" id="1_0liej"]
+[ext_resource type="Script" uid="uid://dtm5gg07lqapl" path="res://addons/2026_08_08_gdp_bool_grid_in_out_event/scene/guid/demo_grid_key_value_register/script/bool_grid_key_value_register.gd.gd" id="1_txnhu"]
+
+[node name="DemoGridKeyValueRegister" type="Node3D" unique_id=1383125621]
+
+[node name="BoolGridKeyValueRegister" type="Node" parent="." unique_id=862060305]
+script = ExtResource("1_txnhu")
+metadata/_custom_type_script = "uid://dtm5gg07lqapl"
+
+[node name="Timer" type="Timer" parent="BoolGridKeyValueRegister" unique_id=926650980]
+wait_time = 0.5
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=55789066]
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer" unique_id=1130300301]
+anchors_preset = -1
+anchor_left = 0.323
+anchor_right = 0.57000005
+anchor_bottom = 0.9754507
+offset_left = -0.51397705
+offset_right = 0.35992432
+offset_bottom = -0.092041016
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=399853405]
+anchors_preset = -1
+anchor_right = 0.263
+anchor_bottom = 0.537
+offset_right = 0.023986816
+offset_bottom = 0.023986816
+
+[node name="BoolGridUiGridTextEditToNamedKeyValue" type="Node" parent="CanvasLayer/Panel" unique_id=1880478453 node_paths=PackedStringArray("_line_edit_key_name", "_text_edit_grid_value", "_submit_button")]
+script = ExtResource("1_0liej")
+_line_edit_key_name = NodePath("../VBoxContainer/LineEdit")
+_text_edit_grid_value = NodePath("../VBoxContainer/TextEdit")
+_submit_button = NodePath("../VBoxContainer/Button")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel" unique_id=1714127149]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel/VBoxContainer" unique_id=2063487250]
+layout_mode = 2
+text = "Edit Named Grid"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1752518411]
+layout_mode = 2
+text = "sinco"
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer/Panel/VBoxContainer" unique_id=1252721292]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+text = "0000
+0000
+0000
+0000"
+
+[node name="Button" type="Button" parent="CanvasLayer/Panel/VBoxContainer" unique_id=358569996]
+layout_mode = 2
+text = "Submit"
+
+[node name="TextEdit2" type="TextEdit" parent="CanvasLayer" unique_id=1224242894]
+anchors_preset = -1
+anchor_left = 0.5815972
+anchor_right = 0.9869792
+anchor_bottom = 0.94598764
+offset_right = 8.0
+offset_bottom = 8.0
+text = "CONDITION Top Left Corner
+GRID sinco
+11--
+1---
+----
+----
+IN
+cmd:log Hello World
+OUT
+cmd:log Goodbye world
+CONDITION Top Left Corner
+GRID sinco
+1000
+1000
+1000
+1000
+IN
+sc: 1037
+OUT
+sc: 2037
+"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="on_grid_full_debug_text_report" from="BoolGridKeyValueRegister" to="CanvasLayer/TextEdit" method="set_text"]
+[connection signal="timeout" from="BoolGridKeyValueRegister/Timer" to="BoolGridKeyValueRegister" method="refresh_full_log_debug_text_report"]
+[connection signal="on_grid_key_value_changed" from="CanvasLayer/Panel/BoolGridUiGridTextEditToNamedKeyValue" to="BoolGridKeyValueRegister" method="set_grid_with_text_image"]
